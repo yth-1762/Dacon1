@@ -41,7 +41,16 @@
 - macrof1
 
 # EDA
-- 
+- target 변수 비율확인(1: 61.99% / 0: 38.01%)
+- 모든 범주형 변수 범주별 비율 확인(preferred_difficulty_level, subscription_type, payment_pattern)
+- 수치형 변수(subscription_duration, recent_login_time, average_login_time, average_time_per_learning_session, monthly_active_learning_days, total_completed_courses, recent_learning_achievement, abandoned_learning_sessions, community_engagement_level, customer_inquiry_history)  target 범주별 분포 히스토그램으로 확인
+- 수치형 변수별 preferred_difficulty_level count를 target별로 히스토그램, boxplot으로 확인(결과: target이 0인 데이터는 preferred_difficulty_level이 low, high, medium순으로 많고 target이 1인 데이터는 medium, low, high 순으로 많다.)
+- 수치형 변수별 subscription_type를 target별로 히스토그램, boxplot으로 확인(결과: target0, target1 모두 subscription_type이 basic이 premium보다 많다.-> 아무래도 어떤 조건이든 basic인 이용자들이 압도적으로 많아서라고 판단)
+- 수치형 변수별 payment_pattern를 target별로 히스토그램, boxplot으로 확인(결과: target 0,1 모두 0,1,2,3,4,5,6,7 순으로 count가 많음)
+- 수치형 변수의 상관관계를 heatmap으로 파악(가장 높은 것이 약 0.08로 모든 수치형변수 높지 않은 상관관계를 보임)
+- 범주형 변수('preferred_difficulty_level', 'payment_pattern)별 subscription_type을 target별로 히스토그램으로 확인(결과: target 0,1 모두 basic이 premium보다 높게 나옴.)
+
+  
 
 # 데이터 전처리
 - 12000개의 데이터만 무작위로 추출
