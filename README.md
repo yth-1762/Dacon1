@@ -66,8 +66,10 @@
 
 
 # 모델링
-- 
-
+- 하이퍼파라미터 튜닝을 optuna를 적용하여 xgboost 모델로 fitting(결과: macrof1= 약 0.50)
+- stacking 방법(xgboost+lgbm+catboost // 최종모델:logistic regression)을 활용하여 fitting(결과: 0.496)
+- votingclassifier(soft방식/xgboost+lgbm+catboost) 모델을 활용하여 fitting(결과: 약 0.50)
+- 하이퍼파라미터 튜닝을 optuna를 적용하여 catboost 모델로 fitting(결과: macrof1= 약 0.51) -> 최종모델 선정
 
 
 # 느낀점
