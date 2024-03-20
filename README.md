@@ -5,7 +5,7 @@
 
 # 주제
 - 학습 플랫폼 구독자 예측 AI 해커톤
-- 
+
 # 배경 및 목적
 - 학습 플랫폼 입장에서는 다음달에도 이용자들도 구독을 할지 안할지 미리 파악하는 것이 중요
 - 학습 플랫폼 이용자들이 다음달 구독 여부를 판별
@@ -14,6 +14,7 @@
 # 데이터
 - https://dacon.io/competitions/official/236179/data(데이터 출처) 
 - 데이터 개수 : 10000개
+  
 | Column | Description |
 |--------|-------------|
 | user_id | 사용자의 고유 식별자 |
@@ -53,17 +54,21 @@
   
 
 # 데이터 전처리
-- 12000개의 데이터만 무작위로 추출
-- tweets 변수에서 텍스트만 반영하기 위해 https:// 부분, 특수문자 제거 이후 사전을 만든 후 정수형으로 인코딩
-- 종속변수는 good tweet는 1, neutral tweet는 0, bat tweet는 –1로 처리한 후 원핫인코딩 실시
-- train data, test data 8:2 비율로 설정
+- 수치형 변수의 조합으로 feature engineering을 실시하여 8개 변수 생성('learning_intensity', 'learning_efficiency', 'achievement_per_session_time', 'learning_session_time_ratio', 'courses_completed_per_learning_days', 'community_engagement_achievement_interaction', 'abandoned_sessions_per_course_completed', 'abandoned_sessions_ratio')
+- lower bound와 upper bound 설정을 통해 수치형 변수 이상치 제거
+- subscription_type, payment_pattern 원핫 인코딩, preferred_difficult_level 라벨 인코딩 수행
+- 수치형 변수에 루트 값을 씌운 변수와 루트 1/3을 씌운 변수를 추가 생성
+- 수치형 변수 전체 min max scaler로 표준화 수행(정규분포를 띄도록 만들기 위해)-> 히스토그램으로 분포 확인 후 정규분포와 유사하지 않은 변수는 제거
+- 수치형 변수 2차 다항식 변환 변수 추가 생성
+- PolynomialFeatures를 사용하여 상호작용 변수들을 새롭게 생성
+- standard scaler로 표준화 수행 후 pca 수행
+- smote 수행
 
-# 프로젝트 내용
-- RNN 모형 FITTING(epochs=10, batch size= 32, optimizer=adam, loss=categorical entropy, activation=softmax, 유닛수=64, bidirectional(return_sequences=True) 1번,bidirectional 1번 dropout(0.2)옵션 1번 추가)
-- LSTM 모형 FITTING(epochs=10, batch size 32, optimizer=adam, loss=categorical entropy, activation=softmax, 유닛수=128,bidirectional(return_sequences=True) 1번, dropout(0.2)옵션 1번 추가)
-- GRU 모형 FITTING(epochs=10, batch size 32, optimizer=adam, loss=categorical entropy, activation=softmax, 유닛수=128,bidirectional(return_sequences=True, recurrent_dropout=0.2) 1번, bidirectional(recurrent_dropout=0.2) 1번 dropout(0.2)옵션 1번 추가)
-- test data accuracy 기준(RNN: 64.46%, LSTM: 69.29, GRU: 72.29%) GRU 모형 최종 선택
+
+# 모델링
+- 
 
 
-# 기대효과
-- 향후 chatgpt에 대한 의견을 나타내는 tweets이 앞으로도 계속 생겨날 것이고 이 모델을 통해 chatgpt에 대한 전반적인 여론이 어떠한지 파악
+
+# 느낀점
+- 아무래도 처음 나가는 경진대회이다 보니 EDA에서도 유의미하지 않은 시각화를 실시했다고 생각한다. 다음부터는 인사이트를 발견할 수 있도록 유의미한 시각화를 실시해야 한다는 걸 느꼈다. 전처리 또한 어느 정도 전처리가 완료 되었음에도 다른 방법으로 다시 표준화를 실시하는 건 잘못된 수행방법이라 생각한다. 아무래도 처음이다보니 여러가지 방법을 적용해 보고 싶어서 너무 무리하여 전처리를 진행했다. 모델링 같은 경우에도 좀 더 다양한 방법으로 시도해봐야 했었다는 아쉬움이 남는다.
